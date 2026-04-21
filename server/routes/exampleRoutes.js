@@ -1,12 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const {
+import express from 'express';
+import {
   getExamples,
   getExampleById,
   createExample,
   updateExample,
   deleteExample
-} = require('../controllers/exampleController');
+} from '../controllers/exampleController.js';
+
+const router = express.Router();
 
 // GET all examples
 router.get('/', getExamples);
@@ -23,4 +24,4 @@ router.put('/:id', updateExample);
 // DELETE an example
 router.delete('/:id', deleteExample);
 
-module.exports = router;
+export default router;

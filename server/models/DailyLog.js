@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const dailyLogSchema = new mongoose.Schema(
   {
@@ -29,4 +29,6 @@ const dailyLogSchema = new mongoose.Schema(
 
 dailyLogSchema.index({ userId: 1, date: 1 }, { unique: true });
 
-module.exports = mongoose.model('DailyLog', dailyLogSchema);
+const DailyLog = mongoose.model('DailyLog', dailyLogSchema);
+
+export default DailyLog;

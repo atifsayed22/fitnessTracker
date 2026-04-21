@@ -1,4 +1,4 @@
-const DailyLog = require('../models/DailyLog');
+import DailyLog from '../models/DailyLog.js';
 function isValidDateString(date) {
   if (typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return false;
@@ -73,7 +73,4 @@ async function getLogs(req, res, next) {
   }
 }
 
-module.exports = {
-  addLog,
-  getLogs
-};
+export { addLog, getLogs };

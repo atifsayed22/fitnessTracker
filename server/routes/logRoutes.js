@@ -1,6 +1,6 @@
-const express = require('express');
-const authMiddleware = require('../middleware/authMiddleware');
-const { addLog, getLogs } = require('../controllers/logController');
+import express from 'express';
+import authMiddleware from '../middleware/authMiddleware.js';
+import { addLog, getLogs } from '../controllers/logController.js';
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.use(authMiddleware);
 router.post('/add', addLog);
 router.get('/', getLogs);
 
-module.exports = router;
+export default router;
