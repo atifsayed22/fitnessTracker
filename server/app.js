@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
-import { fileURLToPath } from 'url';
 import authRoutes from './routes/authRoutes.js';
 import logRoutes from './routes/logRoutes.js';
 import connectDb from './config/db.js';
@@ -14,6 +13,7 @@ app.use(
     credentials: true
   })
 );
+
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/health', (req, res) => {
@@ -29,30 +29,23 @@ app.use((req, res) => {
 
 app.use((error, req, res, next) => {
   console.error(error);
-  if (res.headersSent) {
-    return next(error);
-  }
+  if (res.headersSent) return next(error);
 
   res.status(error.status || 500).json({
     message: error.message || 'Internal server error'
   });
 });
 
-export default app;
+// 🔥 ALWAYS start server (no isMainModule)
+const PORT = process.env.PORT || 5000;
 
-const isMainModule = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
-
-if (isMainModule) {
-  const PORT = process.env.PORT || 5000;
-
-  connectDb()
-    .then(() => {
-      app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-      });
-    })
-    .catch((error) => {
-      console.error('Failed to start server:', error.message);
-      process.exit(1);
+connectDb()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
-}
+  })
+  .catch((error) => {
+    console.error('Failed to start server:', error.message);
+    process.exit(1);
+  });
