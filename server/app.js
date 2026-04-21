@@ -7,11 +7,10 @@ const connectDb = require('./config/db');
 
 const app = express();
 
-const allowedOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim())
-  : true;
-
-app.use(cors({ origin: allowedOrigins }));
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',  // your frontend
+  credentials: true,
+}));
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/health', (req, res) => {
