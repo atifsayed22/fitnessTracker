@@ -52,7 +52,10 @@ export default function DashboardPage({ auth, onLogout }) {
     [logs]
   );
 
-  const tableLogs = useMemo(() => [...logs].reverse(), [logs]);
+  const tableLogs = useMemo(
+    () => [...logs].sort((left, right) => new Date(left.date).getTime() - new Date(right.date).getTime()),
+    [logs]
+  );
 
   async function handleLogSubmit(event) {
     event.preventDefault();
